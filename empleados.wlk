@@ -1,57 +1,72 @@
 //Escribir aqui los objetos
-
 object galvan {
-  var dinero = 0
+  var sueldo = 15000
   var dueda = 0
+  var dinero = 0
+  
+  method sueldo() = sueldo
+  
+  method sueldo(_sueldo) {
+    sueldo = (sueldo + _sueldo) - dueda
+    dueda -= sueldo
+  }
+
+  method cobrarSueldo() {
+    //no hace nada
+    //queda el metodo vacio para que no se rompa el polimorfismo
+  }
+
+  method dueda() {
+    return dueda
+  }
+
   method dinero() {
     return dinero
   }
-  method sueldo(sueldo) {
-    dinero = dinero + sueldo - dueda
-    dueda = dueda - dinero
-  }
+  
   method gastar(cuanto) {
-    dueda = dueda + cuanto
+    if (dinero < cuanto){
+      dueda += (dinero - cuanto).abs()
+    }
+    else 
   }
 }
+
 
 
 object baigorria {
-    var sueldoDisponible = 0
-    var cantidadDeEmpanadas = 0
-    method cantidadDeEmpanadas(cantidad) {
-      cantidadDeEmpanadas = cantidad
-    }
-    method sueldoDisponible() {
-      return sueldoDisponible
-    }
-    method totalCobrado() {
-      sueldoDisponible = sueldoDisponible + 15 * cantidad
-      cantidadDeEmpanadas = 0
-    }
+  var precioEmpanada = 15
+  var totalCobrado = 0
+  var cantidadDeEmpanadasVendidas = 0
+  
+  method precioEmpanada(_precioEmpanada) {   //setter
+    precioEmpanada = _precioEmpanada
+  }
+  
+  method venderEmpanada(cantidad) {
+    cantidadDeEmpanadasVendidas += cantidad
+  }
+  
+  method sueldo() = cantidadDeEmpanadasVendidas * precioEmpanada
+  
+  method totalCobrado() = totalCobrado
+
+  method cobrarSueldo() {
+    totalCobrado = self.sueldo()
+    cantidadDeEmpanadasVendidas = 0
+  }
 }
 
 object gimenez {
-  var fondoParaSueldos = 300000
-  method galvan(sueldo) {
-    galvan.sueldo(sueldo)
-    fondoParaSueldos = fondoParaSueldos - sueldo
-  }
-  method baigorria(cantidad) {
-    baigorria.cantidadDeEmpanadas(cantidad)
-    fondoParaSueldos = fondoParaSueldos - 15 * cantidad
+  var fondo = 300000
+  
+  method foondo() = fondo
+  
+  method pagarA(empleado) {
+    fondo -= empleado.sueldo()
+    empleado.cobrarSueldo()
   }
 }
-
-
-
-
-
-
-
-
-
-
 
 
 
